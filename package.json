@@ -1,0 +1,22 @@
+{
+  "name": "web-size-it",
+  "version": "1.0.0",
+  "description": "This description will change when I'll know what I'm doing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GregorioBaldari/web-size-it.git"
+  },
+  "author": "Gregorio Baldari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GregorioBaldari/web-size-it/issues"
+  },
+  "homepage": "https://github.com/GregorioBaldari/web-size-it#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
