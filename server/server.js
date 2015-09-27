@@ -1,16 +1,32 @@
 var express = require('express');
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 3000;
 
 require('./router/main')(app);
 
-app.set('port', (process.env.PORT || 5000));
+server.listen(port);
+
+app.set('port', port);
 app.use(express.static(__dirname + '/public'));
+
+/*TO DO: Link data.size to the view.
+/*I should create another angular desktop applicationthat shoul register to this message ans show it on screen
+*/
 
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
-app.listen(app.get('port'), function() {
+server.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
+io.on('connection', function (socket) {
+    console.log('a user connected');
+    socket.on('newSize', function(data){
+        console.log('Size: ' + data.size);
+        
+    })
+});
