@@ -1,14 +1,42 @@
-<script src="socket.io.js"></script>
-<script>
-  var socket = io('http://localhost:3000');
-  socket.on('connect', function(){
-    console.log("connected")
-  });
-  socket.on('event', function(data){
-    console.log('Data received: ' + data);
-  });
-  socket.on('disconnect', function(){
-    console.log('Disconnected');
-  });
-</script>
-</script>
+<!DOCTYPE html>
+<html ng-app="mainApp">
+
+<!-- Bootstrap theme -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+    
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<body>
+    <h1>WeSizeIt!</h1>
+    <div ng-controller="displayCtrl" ng-model="totalEstimate">
+        <p>Something: {{totalEstimate}}</p>
+    </div>
+</body>
+    
+    <!-- Phonegap for Adobe PhoneGap builder
+    ================================================== -->
+    <script src="phonegap.js"></script>
+    
+    <!-- Angular
+    ================================================== -->
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-touch.min.js"></script>
+    <script src="js/ui-bootstrap-0.13.4.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+
+    
+    <!-- JQuery
+    ================================================== -->
+    <script src="js/jquery-1.11.3.min.js"></script>
+    
+    <!-- Bootstrap
+    ================================================== -->
+    <script src="js/bootstrap.min.js"></script>  
+    
+    <script src="js/controller.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- SocketIO
+    ================================================== -->
+    <script src="js/socket.io.js"></script>
+</html>
