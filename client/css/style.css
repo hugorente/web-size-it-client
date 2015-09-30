@@ -28,6 +28,15 @@ commands-container {
     font-size: 5em;
 }
 
+h1 {
+    background-color: #0275d8;
+    margin-top: 0;
+    margin-bottom: 3px;
+    color: #fff;
+    font-size: 14px;
+    padding: 2px;
+}
+
 .menu-btn {
     border: none;
     display: inline-block;
