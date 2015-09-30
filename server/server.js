@@ -26,7 +26,10 @@ server.listen(app.get('port'), function() {
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('newSize', function(data){
-        console.log('Size: ' + data.size);
-        
+        console.log('Riceived Size: ' + data.size);
+        socket.broadcast.emit('resultSize', {
+          size: data.size
+        });
+        console.log('Emitted Size: ' + data.size);
     })
 });
