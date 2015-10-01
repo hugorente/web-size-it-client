@@ -24,12 +24,20 @@ server.listen(app.get('port'), function() {
 });
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    console.log('An application is connected');
     socket.on('newSize', function(data){
         console.log('Riceived Size: ' + data.size);
         socket.broadcast.emit('resultSize', {
           size: data.size
         });
         console.log('Emitted Size: ' + data.size);
+    })
+    
+    socket.on('changeName', function(data){
+        console.log('Riceived a change Name: ' + data.userName);
+        socket.broadcast.emit('userName', {
+          userName: data.userName
+        });
+        console.log('Emitted User Name: ' + data.userName);
     })
 });

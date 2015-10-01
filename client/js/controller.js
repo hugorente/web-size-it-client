@@ -4,5 +4,10 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
     socket.on('resultSize', function (data) {
       $scope.totalEstimate = data.size;
     });
+    
+    socket.on('userName', function (data) {
+      $scope.userName = data.userName;
+    });
+    
 }]);
 
