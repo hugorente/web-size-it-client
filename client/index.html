@@ -8,9 +8,17 @@
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
 <body>
     <h1>WeSizeIT (Web Client)</h1>
-    <div ng-controller="displayCtrl" ng-model="totalEstimate">
-        <p class="size-result">{{userName}}</p>
-        <p class="size-result">{{totalEstimate}}</p>
+    <div ng-controller="displayCtrl" ng-model="team">
+        <ul class="list-group" ng-repeat="user in team">
+            <li class="list-group-item">
+            {{user.userName}}
+            <span class="large badge">Risk: {{user.risk}}</span>
+            <span class="badge">Complexity: {{user.complexity}}</span>
+            <span class="badge">Effort: {{user.effort}}</span>    
+            <span class="badge">Size: {{user.size}}</span>
+            </li>  
+        </ul>
+        
     </div>
 </body>
     
