@@ -29,9 +29,11 @@ mainApp.factory('socket', ['$rootScope', function ($rootScope) {
     //The following namespace is used on server side.
     //TO DO
     //Let's the user create a namespace, register it on server, and connet to it
-    var projectSpace = 'projectSpace';
-    var socket = io('https://secret-lake-6472.herokuapp.com/' + projectSpace);
-    var socket = io('http://localhost:3000/' + projectSpace);
+    //var projectSpace = 'projectSpace';
+    //var socket = io('https://secret-lake-6472.herokuapp.com/' + projectSpace);
+    //var socket = io('http://localhost:3000/' + projectSpace);
+    var socket = io('https://secret-lake-6472.herokuapp.com');
+    //var socket = io('http://localhost:3000');
     return {
         on: function (eventName, callback) {
             function wrapper() {
