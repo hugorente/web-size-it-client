@@ -6,11 +6,62 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
     
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
+<head>
+    <title>WeSizeIT</title>
+</head>
 <body>
     <h1>WeSizeIT (Web Client)</h1>
-    <div ng-controller="displayCtrl" ng-model="totalEstimate">
-        <p class="size-result">{{userName}}</p>
-        <p class="size-result">{{totalEstimate}}</p>
+    <div ng-controller="displayCtrl" ng-model="team">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Team Estimations</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group" ng-repeat="user in team">
+                            <li class="list-group-item">
+                            {{user.userName}}
+                            <span class="large badge">Risk: {{user.risk}}</span>
+                            <span class="badge">Complexity: {{user.complexity}}</span>
+                            <span class="badge">Effort: {{user.effort}}</span>    
+                            <span class="badge">Size: {{user.size}}</span>
+                            </li>  
+                        </ul>
+                    </div>
+                    <div table-responsive>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>User</th>
+                                <th>Size</th>
+                                <th>Risk</th>
+                                <th>Complexity</th>
+                                <th>Effort</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="user in team">
+                                <td>1</td>
+                                <td>{{user.userName}}</td>
+                                <td>{{user.size}}</td>
+                                <td>{{user.risk}}</td>
+                                <td>{{user.complexity}}</td>
+                                <td>{{user.effort}}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>   
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Summary</h3>
+                </div>
+                <div class="panel-body">
+                </div>
+        </div>
     </div>
 </body>
     
