@@ -11,29 +11,19 @@
 </head>
 <body>
     <h1>WeSizeIT (Web Client)</h1>
-    <div ng-controller="displayCtrl" ng-model="team">
+    <div ng-controller="displayCtrl" ng-model="team" class="container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Team Estimations</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group" ng-repeat="user in team">
-                            <li class="list-group-item">
-                            {{user.userName}}
-                            <span class="large badge">Risk: {{user.risk}}</span>
-                            <span class="badge">Complexity: {{user.complexity}}</span>
-                            <span class="badge">Effort: {{user.effort}}</span>    
-                            <span class="badge">Size: {{user.size}}</span>
-                            </li>  
-                        </ul>
+                        <h3 class="panel-title">Result</h3>
                     </div>
                     <div table-responsive>
                         <table class="table">
                             <thead>
-                              <tr>
+                              <tr class="text-center">
                                 <th>#</th>
+                                <!--th></th-->
                                 <th>User</th>
                                 <th>Size</th>
                                 <th>Risk</th>
@@ -42,13 +32,14 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr ng-repeat="user in team">
-                                <td>1</td>
+                              <tr ng-repeat="user in team" class="text-center">
+                                <td>{{user.userId +1}}</td>
+                                <!--td ng-class = "{text-success: (user.connected == 'true'), offline-status: (user.connected == 'false')}"><span class="glyphicon glyphicon-signal">{{user.connected}}</span></td-->
                                 <td>{{user.userName}}</td>
-                                <td>{{user.size}}</td>
-                                <td>{{user.risk}}</td>
-                                <td>{{user.complexity}}</td>
-                                <td>{{user.effort}}</td>
+                                <td ng-class = "{warning: (user.higherSize == 'true'), success: (user.lowerSize == 'true')}">{{user.size}}</td>
+                                <td ng-class = "{warning: (user.higherRisk == 'true'), success: (user.lowerRisk == 'true')}">{{user.risk}}</td>
+                                <td ng-class = "{warning: (user.higherComplexity == 'true'), success: (user.lowerComplexity == 'true')}">{{user.complexity}}</td>
+                                <td ng-class = "{warning: (user.higherEffort == 'true'),success: (user.lowerEffort == 'true')}">{{user.effort}}</td>
                               </tr>
                             </tbody>
                         </table>
@@ -56,11 +47,126 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Summary</h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Summary</h3>
+                    </div>
+                    <!-- Risk Summary-->
+                    <div class="row">
+                        <div class="panel-body text-center">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Risk</h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>MIN</th>
+                                        <th>MAX</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{lowerRiskValue}}</td>
+                                        <td>{{higherRiskValue}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in lowerRiskVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in higherRiskVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Complexity Summary-->
+                     <div class="row">
+                        <div class="panel-body text-center">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Complexity</h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>MIN</th>
+                                        <th>MAX</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{lowerComplexityValue}}</td>
+                                        <td>{{higherComplexityValue}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in lowerComplexityVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in higherComplexityVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--  Summary-->
+                     <div class="row">
+                        <div class="panel-body text-center">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Effort</h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>MIN</th>
+                                        <th>MAX</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{lowerEffortValue}}</td>
+                                        <td>{{higherEffortValue}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in lowerEffortVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-group">
+                                                <li class="list-group-item" ng-repeat="user in higherEffortVoters track by $index">
+                                                    {{user}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
                 </div>
-                <div class="panel-body">
-                </div>
+            </div>
         </div>
     </div>
 </body>
