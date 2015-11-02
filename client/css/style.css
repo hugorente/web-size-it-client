@@ -28,6 +28,15 @@ commands-container {
     font-size: 5em;
 }
 
+
+.online-status{
+    color: green;
+}
+
+.offline-status{
+    color: red;
+}
+
 h1 {
     background-color: #0275d8;
     margin-top: 0;
@@ -35,6 +44,14 @@ h1 {
     color: #fff;
     font-size: 14px;
     padding: 2px;
+}
+
+td {
+    text-align: center;
+}
+
+th{
+    text-align: center;
 }
 
 .menu-btn {
