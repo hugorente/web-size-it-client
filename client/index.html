@@ -4,7 +4,7 @@
 <!-- Bootstrap theme -->
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-    
+<link rel="stylesheet" href="css/angular-chart.css">    
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
 <head>
     <title>WeSizeIT</title>
@@ -13,39 +13,7 @@
     <h1>WeSizeIT (Web Client)</h1>
     <div ng-controller="displayCtrl" ng-model="team" class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Result</h3>
-                    </div>
-                    <div table-responsive>
-                        <table class="table">
-                            <thead>
-                              <tr class="text-center">
-                                <th>#</th>
-                                <!--th></th-->
-                                <th>User</th>
-                                <th>Size</th>
-                                <th>Risk</th>
-                                <th>Complexity</th>
-                                <th>Effort</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr ng-repeat="user in team" class="text-center">
-                                <td>{{user.userId +1}}</td>
-                                <!--td ng-class = "{text-success: (user.connected == 'true'), offline-status: (user.connected == 'false')}"><span class="glyphicon glyphicon-signal">{{user.connected}}</span></td-->
-                                <td>{{user.userName}}</td>
-                                <td ng-class = "{warning: (user.higherSize == 'true'), success: (user.lowerSize == 'true')}">{{user.size}}</td>
-                                <td ng-class = "{warning: (user.higherRisk == 'true'), success: (user.lowerRisk == 'true')}">{{user.risk}}</td>
-                                <td ng-class = "{warning: (user.higherComplexity == 'true'), success: (user.lowerComplexity == 'true')}">{{user.complexity}}</td>
-                                <td ng-class = "{warning: (user.higherEffort == 'true'),success: (user.lowerEffort == 'true')}">{{user.effort}}</td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>   
-                </div>
-            </div>
+            <!-- Summsary Tables -->
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -166,6 +134,50 @@
                         </div> 
                     </div>
                 </div>
+                <!-- Radar Chart -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Result</h3>
+                    </div>
+                    <div>
+                        <canvas id="radar" class="chart chart-radar" chart-legend = 'true' chart-data="data" chart-labels="labels" chart-series="series" chart-options ="chartOptions" chart-colours = "chartColours">
+                        </canvas> 
+                    </div>
+                </div>
+            </div>
+            <!-- Results Tables -->
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Result</h3>
+                    </div>
+                    <div table-responsive>
+                        <table class="table">
+                            <thead>
+                              <tr class="text-center">
+                                <th>#</th>
+                                <!--th></th-->
+                                <th>User</th>
+                                <th>Size</th>
+                                <th>Risk</th>
+                                <th>Complexity</th>
+                                <th>Effort</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="user in team" class="text-center">
+                                <td>{{user.userId +1}}</td>
+                                <!--td ng-class = "{text-success: (user.connected == 'true'), offline-status: (user.connected == 'false')}"><span class="glyphicon glyphicon-signal">{{user.connected}}</span></td-->
+                                <td>{{user.userName}}</td>
+                                <td ng-class = "{warning: (user.higherSize == 'true'), success: (user.lowerSize == 'true')}">{{user.size}}</td>
+                                <td ng-class = "{warning: (user.higherRisk == 'true'), success: (user.lowerRisk == 'true')}">{{user.risk}}</td>
+                                <td ng-class = "{warning: (user.higherComplexity == 'true'), success: (user.lowerComplexity == 'true')}">{{user.complexity}}</td>
+                                <td ng-class = "{warning: (user.higherEffort == 'true'),success: (user.lowerEffort == 'true')}">{{user.effort}}</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>   
+                </div>
             </div>
         </div>
     </div>
@@ -175,13 +187,19 @@
     ================================================== -->
     <script src="phonegap.js"></script>
     
+     <!-- Chart Library
+    ================================================== -->
+    <script src="js/Chart.js"></script>
+    
     <!-- Angular
     ================================================== -->
     <script src="js/angular.min.js"></script>
     <script src="js/angular-touch.min.js"></script>
     <script src="js/ui-bootstrap-0.13.4.min.js"></script>
     <script src="js/angular-route.min.js"></script>
-
+    <script src="js/angular-pageslide-directive.min.js"></script>
+    <script src="js/angular-sanitize.js"></script>
+    <script src="js/angular-chart.min.js"></script>
     
     <!-- JQuery
     ================================================== -->
@@ -197,4 +215,5 @@
     <!-- SocketIO
     ================================================== -->
     <script src="js/socket.io.js"></script>
+    
 </html>

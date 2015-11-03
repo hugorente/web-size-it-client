@@ -1,5 +1,5 @@
 var mainApp = angular.module('mainApp', [
-    'ngRoute', 'appControllers'
+    'ngRoute','ngSanitize','chart.js','appControllers'
 ]);
 
 mainApp.service('appVars', function () {
@@ -23,6 +23,17 @@ mainApp.service('appVars', function () {
     };
 });
 
+mainApp.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.
+    when('/formula-builder', {
+        templateUrl: 'template/formula-builder.html',
+        controller: 'formulaBuilderCtrl'
+    }).
+    otherwise({
+        redirectTo: '/'
+    });
+}]);
+
 //Change socket configuration to link to server on local or remote.
 //To use server on local use 'node server.js' command in the local server project folder
 mainApp.factory('socket', ['$rootScope', function ($rootScope) {
@@ -32,7 +43,7 @@ mainApp.factory('socket', ['$rootScope', function ($rootScope) {
     //var projectSpace = 'projectSpace';
     //var socket = io('https://secret-lake-6472.herokuapp.com/' + projectSpace);
     //var socket = io('http://localhost:3000/' + projectSpace);
-    var socket = io('https://secret-lake-6472.herokuapp.com');
+    var socket = io('https://wesizeit.herokuapp.com');
     //var socket = io('http://localhost:3000');
     return {
         on: function (eventName, callback) {

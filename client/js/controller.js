@@ -1,9 +1,26 @@
-var appControllers = angular.module('appControllers', ['ngRoute', 'ui.bootstrap']);
+var appControllers = angular.module('appControllers', ['ngRoute', 'chart.js', 'ui.bootstrap']);
 
 appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, socket) {
     'use strict';
     var team = [];
     $scope.team = team;
+   
+    /* 
+        $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
+
+      $scope.data = [
+        [65, 59, 90, 81, 56, 55, 40],
+        [28, 48, 40, 19, 96, 27, 100]
+      ];
+    */
+    
+    
+    //Chart Radar vlaue and options
+    $scope.labels =[];
+    $scope.series= ['Risk', 'Complexity', 'Effort'];
+    $scope.data = [ [], [], [] ];
+    $scope.chartColours = ['#ff0000','#ffef42','#6ef0f7']
+   
     ////Lower and higher values index within the team to identify the users that gives the related values
     $scope.higherRiskIndex = 0;
     $scope.lowerRiskIndex = 0;
@@ -53,6 +70,9 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
         $scope.team = team;
         console.log('Team memebers number is: ' + team.length);
         $scope.setFlags();
+        if (team.length >= 3) {
+            $scope.updateRadarData();
+        }
     });
     
     //Capture when a mobile app disconnected
@@ -203,5 +223,29 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
             } 
         }  
     };
+
+    $scope.updateRadarData = function () {
+        $scope.labels = $scope.team.map(function(user) {return user.userName} );
+        $scope.data[0] = $scope.team.map(function(user) {
+            console.log('Risk: ' + user.risk);
+            return user.risk} );
+        $scope.data[1] = $scope.team.map(function(user) {
+            console.log('Complexity: ' + user.complexity);
+            return user.complexity} );
+        $scope.data[2] = $scope.team.map(function(user) {
+            console.log('Effort: ' + user.effort);
+            return user.effort} );
+    };
 }]);
 
+appControllers.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all line charts
+    ChartJsProvider.setOptions({
+      //colours: ['247,70,74,1'],
+        responsive: true,
+        datasetFill : false,
+        datasetStroke : false,
+        pointDot : false,
+        scaleShowLabels : true
+    });
+  }])
