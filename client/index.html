@@ -137,12 +137,13 @@
                 <!-- Radar Chart -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Result</h3>
+                        <h3 class="panel-title">Chart</h3>
                     </div>
-                    <div>
+                <div>
                         <canvas id="radar" class="chart chart-radar" chart-legend = 'true' chart-data="data" chart-labels="labels" chart-series="series" chart-options ="chartOptions" chart-colours = "chartColours">
                         </canvas> 
                     </div>
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refreshRadar()"></span>
                 </div>
             </div>
             <!-- Results Tables -->
@@ -166,7 +167,7 @@
                             </thead>
                             <tbody>
                               <tr ng-repeat="user in team" class="text-center">
-                                <td>{{user.userId +1}}</td>
+                                <td>{{user.userId}}</td>
                                 <!--td ng-class = "{text-success: (user.connected == 'true'), offline-status: (user.connected == 'false')}"><span class="glyphicon glyphicon-signal">{{user.connected}}</span></td-->
                                 <td>{{user.userName}}</td>
                                 <td ng-class = "{warning: (user.higherSize == 'true'), success: (user.lowerSize == 'true')}">{{user.size}}</td>
