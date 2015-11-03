@@ -19,7 +19,7 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
     $scope.labels =[];
     $scope.series= ['Risk', 'Complexity', 'Effort'];
     $scope.data = [ [], [], [] ];
-    $scope.chartColours = ['#ff0000','#ffef42','#6ef0f7']
+    //$scope.chartColours = ['#ff0000','#ffef42','#6ef0f7'];
    
     ////Lower and higher values index within the team to identify the users that gives the related values
     $scope.higherRiskIndex = 0;
@@ -54,19 +54,19 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
     socket.emit('client-connection');
     //Capture sizes sent by the server
     
-    
+    /*
     socket.on('resultSize', function (data) {
         $scope.totalEstimate = data.size;
         team[data.userId] = data;
         console.log('Memebers number is: ' + team.length);
     });
-    
+    */
     socket.on('newData', function (data) {
         console.log(data.userName + ' updated size: ' + data.size);
         if ($scope.team[data.userId] === undefined) {
             team.push(data.userId);
         }
-        team[data.userId] = data;
+        team[data.userId-1] = data;
         $scope.team = team;
         console.log('Team memebers number is: ' + team.length);
         $scope.setFlags();
@@ -236,9 +236,19 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
             console.log('Effort: ' + user.effort);
             return user.effort} );
     };
+    
+    $scope.refreshRadar = function () {
+        if ($scope.team.length >= 3) {
+            $scope.updateRadarData();
+            console.log('Chart should be refreshed');
+        } else {
+            console.log('Chart want refresh as number of users is minor than 3');
+        }
+        
+    }
 }]);
 
-appControllers.config(['ChartJsProvider', function (ChartJsProvider) {
+/*appControllers.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all line charts
     ChartJsProvider.setOptions({
       //colours: ['247,70,74,1'],
@@ -248,4 +258,4 @@ appControllers.config(['ChartJsProvider', function (ChartJsProvider) {
         pointDot : false,
         scaleShowLabels : true
     });
-  }])
+  }])*/
