@@ -5,22 +5,24 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
     var team = [];
     $scope.team = team;
    
-    /* 
-        $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
+    //Chart Radar vlaue and options
+    /*
+    $scope.labels =["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"];
 
-      $scope.data = [
+    $scope.data = [
         [65, 59, 90, 81, 56, 55, 40],
         [28, 48, 40, 19, 96, 27, 100]
-      ];
-    */
-    
-    
-    //Chart Radar vlaue and options
+    ];
+    */    
     $scope.labels =[];
     $scope.series= ['Risk', 'Complexity', 'Effort'];
     $scope.data = [ [], [], [] ];
+    
+    //Chart Polar value and options
+    $scope.polarLabels = ["Risk", "Complexity", "Effort", "Size"];
+    $scope.polarData = [0, 0, 0, 0, 0];
+    
     //$scope.chartColours = ['#ff0000','#ffef42','#6ef0f7'];
-   
     ////Lower and higher values index within the team to identify the users that gives the related values
     $scope.higherRiskIndex = 0;
     $scope.lowerRiskIndex = 0;
@@ -63,31 +65,39 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
     */
     socket.on('newData', function (data) {
         console.log(data.userName + ' updated size: ' + data.size);
+        /*
         if ($scope.team[data.userId] === undefined) {
             team.push(data.userId);
         }
-        team[data.userId-1] = data;
+        */
+        team[data.userId] = data;
         $scope.team = team;
         console.log('Team memebers number is: ' + team.length);
         $scope.setFlags();
         if (team.length >= 3) {
             $scope.updateRadarData();
         }
+        $scope.updatePolarData();
     });
     
     //Capture when a mobile app disconnected
     socket.on('userDisconnection', function (data) {
-        // NOt sure why but this if prevents error on refresh mobile application running on desktop
-        if (team[data.userId].userId > -1) {
+        // All the if the statetemt is t prevent error when you refresh the app and then kill already existing mobile app session
+        if ( team[data.userId] !== undefined && team[data.userId].userId !== undefined && team[data.userId].userId > -1) {
             console.log('******Team member disconnection******');
             console.log('Team member disconnection: ' + team[data.userId].userName);
-            /* Remove the user
+            // Remove the user
             team.splice(data.userId, 1);
             console.log('Connected team members are now: ' + team.length);
             $scope.team = team;
-            */
-            team[data.userId].connected = 'false';
-            
+            if (team.length >= 3) {
+                $scope.updateRadarData();
+            } else {
+                $('#radar').width($('#radar').width());
+            }
+
+           // team[data.userId].connected = 'false';
+
             console.log('*************');
         }
     });
@@ -237,14 +247,60 @@ appControllers.controller('displayCtrl', ['$scope', 'socket', function ($scope, 
             return user.effort} );
     };
     
+    $scope.updatePolarData = function () {
+        //Risk
+        var values = $scope.team.map(function(user) {
+            return user.risk
+        });
+        
+        var sum = values.reduce(function(sum, value){
+          return sum + value;
+        }, 0);
+
+        $scope.polarData[0] = sum / $scope.team.length;
+        
+        //Effort
+        values = $scope.team.map(function(user) {
+            return user.effort
+        });
+        
+        sum = values.reduce(function(sum, value){
+          return sum + value;
+        }, 0);
+
+        $scope.polarData[1] = sum / $scope.team.length;
+        
+        //Complexity
+        values = $scope.team.map(function(user) {
+            return user.complexity
+        });
+        
+        sum = values.reduce(function(sum, value){
+          return sum + value;
+        }, 0);
+
+        $scope.polarData[2] = sum / $scope.team.length;
+        
+        //Size
+        values = $scope.team.map(function(user) {
+            return user.size
+        });
+        
+        sum = values.reduce(function(sum, value){
+          return sum + value;
+        }, 0);
+
+        $scope.polarData[3] = sum / $scope.team.length;
+        
+    }
+    
     $scope.refreshRadar = function () {
         if ($scope.team.length >= 3) {
-            $scope.updateRadarData();
-            console.log('Chart should be refreshed');
+        $scope.updateRadarData();
+        console.log('Chart should be refreshed');
         } else {
             console.log('Chart want refresh as number of users is minor than 3');
         }
-        
     }
 }]);
 

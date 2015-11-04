@@ -137,10 +137,21 @@
                 <!-- Radar Chart -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Chart</h3>
+                        <h3 class="panel-title">Radar Chart</h3>
                     </div>
                 <div>
-                        <canvas id="radar" class="chart chart-radar" chart-legend = 'true' chart-data="data" chart-labels="labels" chart-series="series" chart-options ="chartOptions" chart-colours = "chartColours">
+                    <canvas id="radar" class="chart chart-radar" chart-legend = 'true' chart-data="data" chart-labels="labels" chart-series="series" chart-options ="chartOptions" chart-colours = "chartColours">
+                    </canvas> 
+                </div>
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refreshRadar()"></span>
+                </div>
+                <!-- Polar Chart -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Polar Chart</h3>
+                    </div>
+                    <div>
+                        <canvas id="polar-area" class="chart chart-polar-area" chart-legend = 'true' chart-data="polarData" chart-labels="polarLabels">
                         </canvas> 
                     </div>
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true" ng-click="refreshRadar()"></span>
